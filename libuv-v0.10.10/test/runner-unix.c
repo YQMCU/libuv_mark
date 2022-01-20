@@ -44,9 +44,10 @@ void platform_init(int argc, char **argv) {
   const char* tap;
 
   tap = getenv("UV_TAP_OUTPUT");
-  tap_output = (tap != NULL && atoi(tap) > 0);
+  tap_output = (tap != NULL && atoi(tap) > 0); // YQ_MARK: tap_output Defined in test/runner.c
 
   /* Disable stdio output buffering. */
+  // YQ_MARK: 不让标准输出缓存
   setvbuf(stdout, NULL, _IONBF, 0);
   setvbuf(stderr, NULL, _IONBF, 0);
   strcpy(executable_path, argv[0]);
@@ -56,6 +57,7 @@ void platform_init(int argc, char **argv) {
 
 /* Invoke "argv[0] test-name [test-part]". Store process info in *p. */
 /* Make sure that all stdio output of the processes is buffered up. */
+// YQ_MARK: 创建一个进程，并且绑在p上，之后方便管理
 int process_start(char* name, char* part, process_info_t* p, int is_helper) {
   FILE* stdout_file;
   const char* arg;
@@ -71,7 +73,7 @@ int process_start(char* name, char* part, process_info_t* p, int is_helper) {
   p->terminated = 0;
   p->status = 0;
 
-  pid_t pid = fork();
+  pid_t pid = fork(); // YQ_MARK: fork只能在unix系统中编译
 
   if (pid < 0) {
     perror("fork");
@@ -80,6 +82,7 @@ int process_start(char* name, char* part, process_info_t* p, int is_helper) {
 
   if (pid == 0) {
     /* child */
+    // YQ_MARK: fork() 之后的子进程才会操作的内容
     arg = getenv("UV_USE_VALGRIND");
     n = 0;
 
