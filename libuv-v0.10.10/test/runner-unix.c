@@ -40,6 +40,7 @@
 
 
 /* Do platform-specific initialization. */
+// YQ_MARK: 平台初始化，设置不使用输出缓存，直接输出
 void platform_init(int argc, char **argv) {
   const char* tap;
 
@@ -128,6 +129,7 @@ typedef struct {
 /* This function is run inside a pthread. We do this so that we can possibly
  * timeout.
  */
+// YQ_MARK: 依次回收子进程
 static void* dowait(void* data) {
   dowait_args* args = data;
 
@@ -161,6 +163,7 @@ static void* dowait(void* data) {
 /* Wait for all `n` processes in `vec` to terminate. */
 /* Time out after `timeout` msec, or never if timeout == -1 */
 /* Return 0 if all processes are terminated, -1 on error, -2 on timeout. */
+// YQ_MARK: 调用dowait以等待所有的进程完成
 int process_wait(process_info_t* vec, int n, int timeout) {
   int i;
   process_info_t* p;
@@ -244,6 +247,7 @@ long int process_output_size(process_info_t *p) {
   /* Size of the p->stdout_file */
   struct stat buf;
 
+  // YQ_MARK: 获取输出文件的尺寸
   int r = fstat(fileno(p->stdout_file), &buf);
   if (r < 0) {
     return -1;
