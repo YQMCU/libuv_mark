@@ -2,12 +2,15 @@
 /*
  * Copyright (C) Igor Sysoev
  */
-
+// YQ_MARK: 此文档是nginx的队列结构实现
+// 可参考 nginx源码分析—队列结构ngx_queue_t_学习，思考，记录，分享。-CSDN博客
+// https://blog.csdn.net/livelylittlefish/article/details/6607324
 
 #ifndef NGX_QUEUE_H_INCLUDED_
 #define NGX_QUEUE_H_INCLUDED_
 
 
+// YQ_MARK: 首先 ngx_queue_s 是一个具有头节点的双向循环链表的数据结构
 typedef struct ngx_queue_s  ngx_queue_t;
 
 struct ngx_queue_s {
