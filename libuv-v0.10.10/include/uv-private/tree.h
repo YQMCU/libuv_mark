@@ -26,6 +26,7 @@
 #ifndef  UV_TREE_H_
 #define  UV_TREE_H_
 
+// YQ_MARK: 对于可能用不到变量进行后缀注释，消除GCC编译时候的警告
 #ifndef UV__UNUSED
 # if __GNUC__
 #  define UV__UNUSED __attribute__((unused))
@@ -61,6 +62,7 @@
  * The maximum height of a red-black tree is 2lg (n+1).
  */
 
+// YQ_MARK: 伸展树实现
 #define SPLAY_HEAD(name, type)                                                \
 struct name {                                                                 \
   struct type *sph_root; /* root of the tree */                               \
@@ -294,6 +296,7 @@ void name##_SPLAY_MINMAX(struct name *head, int __comp)                       \
        (x) != NULL;                                                           \
        (x) = SPLAY_NEXT(name, head, x))
 
+// YQ_MARK: 红黑树实现
 /* Macros that define a red-black tree */
 #define RB_HEAD(name, type)                                                   \
 struct name {                                                                 \
